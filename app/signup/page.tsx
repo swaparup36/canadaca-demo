@@ -4,10 +4,14 @@ import { MoveRight, UploadCloud } from "lucide-react";
 import Footer from "../components/footer";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { userSignup } from "../actions/users";
+import { userSignup, sendUserJoiningMail } from "../actions/users";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/navigation";
 
 
-export default function UserSignup() {    
+export default function UserSignup() {   
+    const notify = (msg: string) => toast(msg); 
     const indianStates = [
         "Andhra Pradesh",
         "Arunachal Pradesh",
@@ -38,6 +42,7 @@ export default function UserSignup() {
         "Uttarakhand",
         "West Bengal"
       ];
+    const router = useRouter();
       
     const [userSignupDetails, setUserSignupDetails] = useState({
         email: '',
@@ -56,6 +61,10 @@ export default function UserSignup() {
         price: 0
     });
 
+    const [passportFileName, setPassportFileName] = useState('');
+    const [resumeFileName, setResumeFileName] = useState('');
+    const [jobexpletterFileName, setJobexpletterFileName] = useState('');
+
     const userSignnupDetailsOnchange = (e) => {
         const {name, value, files} = e.target;
         if(name === 'image'){
@@ -68,6 +77,7 @@ export default function UserSignup() {
             
         }else if(name === 'resume'){
             if(!files[0]) return;
+            setResumeFileName(files[0].name);
             const reader = new FileReader();
             reader.readAsDataURL(files[0]);
             reader.onloadend = () => {
@@ -75,6 +85,7 @@ export default function UserSignup() {
             };
         }else if(name === 'passport'){
             if(!files[0]) return;
+            setPassportFileName(files[0].name);
             const reader = new FileReader();
             reader.readAsDataURL(files[0]);
             reader.onloadend = () => {
@@ -82,6 +93,7 @@ export default function UserSignup() {
             };
         }else if(name === 'job_experience_letter'){
             if(!files[0]) return;
+            setJobexpletterFileName(files[0].name);
             const reader = new FileReader();
             reader.readAsDataURL(files[0]);
             reader.onloadend = () => {
@@ -98,6 +110,16 @@ export default function UserSignup() {
         try {
             const response = await userSignup(userSignupDetails);
             console.log(response);
+
+            if(response.success){
+                notify(response.message);
+                const sendMailResult = await sendUserJoiningMail();
+                console.log(sendMailResult);
+                sessionStorage.removeItem('payment_details');
+                router.push('/');
+            }else{
+                notify(response.message);
+            }
         } catch (error) {
             console.log(error);
         }
@@ -111,12 +133,19 @@ export default function UserSignup() {
             email: userPaymentDetailsObj.email,
             utr: userPaymentDetailsObj.utr,
             plan: userPaymentDetailsObj.plan,
-            price: userPaymentDetailsObj.price
+            price: userPaymentDetailsObj.plan_Price
         })
-    }, [])
+    }, []);
+
+    useEffect(()=>{
+        if(!sessionStorage.getItem('payment_details')) {
+            router.push('/getstarted-plans');
+        }
+    }, []);
 
   return (
     <>
+        <ToastContainer />
         <div className="flex flex-col justify-center items-center w-full py-5">
             <h1 className="font-bold text-5xl my-2">Sign up</h1>
             <p className="text-gray-500">Fill the details to join us</p>
@@ -135,31 +164,31 @@ export default function UserSignup() {
                             </div>
                             <p className="text-sm">Upload Profile Picture (only .png, .jpg or .jpeg formats)</p>
                         </div>
-                        <input type="file" accept=".png, .jpg, .jpeg" id="userimage" name="image" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden/>
+                        <input type="file" accept=".png, .jpg, .jpeg" id="userimage" name="image" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <label htmlFor="userfullname" className="text-sm my-2">Full Name</label>
-                        <input type="text" id="userfullname" placeholder="Enter your full name" name="full_name" value={userSignupDetails.full_name} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" />
+                        <input type="text" id="userfullname" placeholder="Enter your full name" name="full_name" value={userSignupDetails.full_name} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" required/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <label htmlFor="useremail" className="text-sm my-2">Email</label>
-                        <input type="email" id="useremail" placeholder="Enter your email" name="email" value={userSignupDetails.email} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" />
+                        <input type="email" id="useremail" placeholder="Enter your email" name="email" value={userSignupDetails.email} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" required/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <label htmlFor="userpass" className="text-sm my-2">Password</label>
-                        <input type="password" id="userpass" placeholder="Enter your password" name="password" value={userSignupDetails.password} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" />
+                        <input type="password" id="userpass" placeholder="Enter your password" name="password" value={userSignupDetails.password} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" required/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <label htmlFor="userqualification" className="text-sm my-2">Quallification</label>
-                        <input type="text" id="userqualification" placeholder="Enter your qualification" name="qualification" value={userSignupDetails.qualification} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" />
+                        <input type="text" id="userqualification" placeholder="Enter your qualification" name="qualification" value={userSignupDetails.qualification} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" required/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <label htmlFor="usernationality" className="text-sm my-2">Nationality</label>
-                        <input type="text" id="usernationality" placeholder="Enter your nationality" name="nationality" value={userSignupDetails.nationality} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" />
+                        <input type="text" id="usernationality" placeholder="Enter your nationality" name="nationality" value={userSignupDetails.nationality} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" required/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <label htmlFor="userestate" className="text-sm my-2">State</label>
-                        <select id="userestate" name="state" value={userSignupDetails.state} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md">
+                        <select id="userestate" name="state" value={userSignupDetails.state} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" required>
                             <option value="">Choose your state</option>
                             {
                                 indianStates.map((state, i)=>{
@@ -170,33 +199,36 @@ export default function UserSignup() {
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <label htmlFor="userjob" className="text-sm my-2">Job</label>
-                        <input type="text" id="userjob" placeholder="Enter your job" name="job" value={userSignupDetails.job} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" />
+                        <input type="text" id="userjob" placeholder="Enter your job" name="job" value={userSignupDetails.job} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" required/>
                     </div>
 
                     <p className="font-semibold my-4 text-lg">Documents</p>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <p className="text-sm">Passport</p>
-                        <label htmlFor="userpassport" className="text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
+                        <p className="text-sm text-center w-full">{passportFileName}</p>
+                        <label htmlFor="userpassport" className="cursor-pointer text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
                             <UploadCloud size={40} color="gray" />
                             <p className="text-sm my-1">Upload Your Passport (only .png, .jpg, .jpeg and .pdf formats)</p>
                         </label>
-                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userpassport" name="passport" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden/>
+                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userpassport" name="passport" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <p className="text-sm">Resume</p>
-                        <label htmlFor="userresume" className="text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
+                        <p className="text-sm text-center w-full">{resumeFileName}</p>
+                        <label htmlFor="userresume" className="cursor-pointer text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
                             <UploadCloud size={40} color="gray" />
                             <p className="text-sm my-1">Upload Your Resume (only .png, .jpg, .jpeg and .pdf formats)</p>
                         </label>
-                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userresume" name="resume" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden/>
+                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userresume" name="resume" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <p className="text-sm">Job experience letter</p>
-                        <label htmlFor="userjobexpletter" className="text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
+                        <p className="text-sm text-center w-full">{jobexpletterFileName}</p>
+                        <label htmlFor="userjobexpletter" className="cursor-pointer text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
                             <UploadCloud size={40} color="gray" />
                             <p className="text-sm my-1">Upload Your Job Experience Letter (only .png, .jpg, .jpeg and .pdf formats)</p>
                         </label>
-                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userjobexpletter" name="job_experience_letter" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden/>
+                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userjobexpletter" name="job_experience_letter" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <button className="text-white w-full py-2 bg-black rounded-md my-2">Proceed</button>

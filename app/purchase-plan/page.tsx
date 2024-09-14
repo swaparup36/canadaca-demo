@@ -3,12 +3,15 @@
 import { MoveRight } from "lucide-react";
 import Footer from "../components/footer";
 import { GetContext } from "../context/planProvider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
+import { ToastContainer, toast } from 'react-toastify';
+import { userEmailCheck } from '../actions/users';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function GetStartedPlans() {
+    const notify = (msg: string) => toast(msg);
     const { chosenPlan } = GetContext();
     const router = useRouter();
     
@@ -17,6 +20,16 @@ export default function GetStartedPlans() {
         utr: ''
     });
     const [emailEntered, setEmailEntered] = useState(false);
+
+    const checkForUniqueEmail = async() => {
+        const respone = await userEmailCheck(userPaymentDetails.email);
+
+        if(respone.success){
+            notify('User with this email already exists');
+        }else{
+            setEmailEntered(true);
+        }
+    }
 
     const userPaymentDetailsOnchange = (e) => {
         setUserPaymentDetails({...userPaymentDetails, [e.target.name]: e.target.value })
@@ -38,9 +51,16 @@ export default function GetStartedPlans() {
             console.log(error);
         }
     }
+
+    useEffect(()=>{
+        if(chosenPlan.name === '') {
+            router.push('/getstarted-plans');
+        }
+    }, []);
     
   return (
     <>
+        <ToastContainer />
         <div className="flex justify-center items-center p-5 w-full h-[95svh]">
             <div className="p-10 w-[40%] min-h-[50svh] flex flex-col justify-between items-start" style={{ boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset' }}>
                 <div className="rounded-lg w-full border-2 border-gray-200 px-4 py-2 flex flex-col items-start justify-center">
@@ -56,7 +76,7 @@ export default function GetStartedPlans() {
                                 <input type="email" id="useremail" placeholder="Enter your email" name="email" value={userPaymentDetails.email} onChange={userPaymentDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" />
                             </div>
                             <div className="flex flex-col justify-around items-start w-full my-2">
-                                <span className="text-white cursor-pointer flex justify-center items-center w-full py-2 bg-black rounded-md my-2" onClick={()=>setEmailEntered(true)} >Proceed</span>
+                                <span className="text-white cursor-pointer flex justify-center items-center w-full py-2 bg-black rounded-md my-2" onClick={checkForUniqueEmail} >Proceed</span>
                             </div>
                         </>
                     }
