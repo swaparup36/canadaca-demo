@@ -30,7 +30,7 @@ export async function userSignup(formdata) {
             }
         }
 
-        const result = await sql`INSERT INTO users (full_name, email, password, qualification, utr, nationality, state, job, passport, image, resume, job_experience_letter, plan, price) VALUES (${formdata.full_name}, ${formdata.email}, ${hashedPassword}, ${formdata.qualification}, ${formdata.utr}, ${formdata.nationality}, ${formdata.state}, ${formdata.job}, ${formdata.passport}, ${formdata.image}, ${formdata.resume}, ${formdata.job_experience_letter}, ${formdata.plan}, ${formdata.price});`;
+        const result = await sql`INSERT INTO users (full_name, email, password, qualification, utr, nationality, state, job, passportfront, passportback, image, resume, job_experience_letter, plan, price) VALUES (${formdata.full_name}, ${formdata.email}, ${hashedPassword}, ${formdata.qualification}, ${formdata.utr}, ${formdata.nationality}, ${formdata.state}, ${formdata.job}, ${formdata.passportfront}, ${formdata.passportback}, ${formdata.image}, ${formdata.resume}, ${formdata.job_experience_letter}, ${formdata.plan}, ${formdata.price});`;
 
         const user = await sql`SELECT * FROM users WHERE email = ${formdata.email}`;
         const jwtPayload = {
@@ -42,6 +42,38 @@ export async function userSignup(formdata) {
         return {
             result: result.rows,
             message: "Account created successfully",
+            success: true,
+        };
+    } catch (error) {
+        console.log(error);
+        return {
+            message: "something wrong happend",
+            error: error,
+            success: false
+        }
+    }
+}
+
+// Function to user plan purchase
+export async function userPurchasePlan(formdata) {
+    try {
+        const token = cookies().get("canadaca_secret").value;
+        const id = await jwt.verify(token, process.env.JWT_SECRET).id;
+        const checkresult = await sql`SELECT * FROM users WHERE id = ${id};`;
+
+        const user = checkresult.rows[0];
+        if(!user){
+            return {
+                message: "user does not exists",
+                success: false
+            }
+        }
+
+        const result = await sql`UPDATE users SET plan = ${formdata.plan}, price = ${formdata.price}, utr = ${formdata.plan} WHERE id = ${user.id};`;
+
+        return {
+            result: result.rowCount,
+            message: "Plan purchased successfully",
             success: true,
         };
     } catch (error) {

@@ -618,6 +618,10 @@ export default function Navbar() {
 
     if(validationResult.success){
       setIsLoggedin(true);
+
+      if(validationResult.user?.price === 0){
+        router.push('/getstarted-plans');
+      }
     }
   }
  
@@ -680,7 +684,7 @@ export default function Navbar() {
             <ChevronDown />
           </span>
           {!isLoggedin &&
-            <button onClick={()=>{router.push('/getstarted-plans')}} className="bg-[#26374a] hover:bg-[#444] text-white text-sm px-4 py-3">
+            <button onClick={()=>{router.push('/signup')}} className="bg-[#26374a] hover:bg-[#444] text-white text-sm px-4 py-3">
               Sign in
             </button>
           }

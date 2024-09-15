@@ -2,7 +2,7 @@
 
 import { MoveRight, UploadCloud } from "lucide-react";
 import Footer from "../components/footer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { userSignup, sendUserJoiningMail } from "../actions/users";
 import { ToastContainer, toast } from 'react-toastify';
@@ -53,15 +53,17 @@ export default function UserSignup() {
         nationality: '',
         state: '',
         job: '',
-        passport: '',
+        passportfront: '',
+        passportback: '',
         image: '',
         resume: '',
         job_experience_letter: '',
-        plan: '',
+        plan: 'free',
         price: 0
     });
 
-    const [passportFileName, setPassportFileName] = useState('');
+    const [passportFrontFileName, setPassportFrontFileName] = useState('');
+    const [passportBackFileName, setPassportBackFileName] = useState('');
     const [resumeFileName, setResumeFileName] = useState('');
     const [jobexpletterFileName, setJobexpletterFileName] = useState('');
 
@@ -83,9 +85,17 @@ export default function UserSignup() {
             reader.onloadend = () => {
                 setUserSignupDetails({ ...userSignupDetails, [name]: reader.result });
             };
-        }else if(name === 'passport'){
+        }else if(name === 'passportfront'){
             if(!files[0]) return;
-            setPassportFileName(files[0].name);
+            setPassportFrontFileName(files[0].name);
+            const reader = new FileReader();
+            reader.readAsDataURL(files[0]);
+            reader.onloadend = () => {
+                setUserSignupDetails({ ...userSignupDetails, [name]: reader.result });
+            };
+        }else if(name === 'passportback'){
+            if(!files[0]) return;
+            setPassportBackFileName(files[0].name);
             const reader = new FileReader();
             reader.readAsDataURL(files[0]);
             reader.onloadend = () => {
@@ -115,8 +125,7 @@ export default function UserSignup() {
                 notify(response.message);
                 const sendMailResult = await sendUserJoiningMail();
                 console.log(sendMailResult);
-                sessionStorage.removeItem('payment_details');
-                router.push('/');
+                router.push('/getstarted-plans');
             }else{
                 notify(response.message);
             }
@@ -124,24 +133,6 @@ export default function UserSignup() {
             console.log(error);
         }
     }
-    
-    useEffect(()=>{
-        const userPaymentDetails = sessionStorage.getItem('payment_details');
-        if(!userPaymentDetails) return;
-        const userPaymentDetailsObj = JSON.parse(userPaymentDetails);
-        setUserSignupDetails({ ...userSignupDetails,
-            email: userPaymentDetailsObj.email,
-            utr: userPaymentDetailsObj.utr,
-            plan: userPaymentDetailsObj.plan,
-            price: userPaymentDetailsObj.plan_Price
-        })
-    }, []);
-
-    useEffect(()=>{
-        if(!sessionStorage.getItem('payment_details')) {
-            router.push('/getstarted-plans');
-        }
-    }, []);
 
   return (
     <>
@@ -204,13 +195,22 @@ export default function UserSignup() {
 
                     <p className="font-semibold my-4 text-lg">Documents</p>
                     <div className="flex flex-col justify-around items-start w-full my-2">
-                        <p className="text-sm">Passport</p>
-                        <p className="text-sm text-center w-full">{passportFileName}</p>
-                        <label htmlFor="userpassport" className="cursor-pointer text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
+                        <p className="text-sm">Passport Front</p>
+                        <p className="text-sm text-center w-full">{passportFrontFileName}</p>
+                        <label htmlFor="userpassportfront" className="cursor-pointer text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
                             <UploadCloud size={40} color="gray" />
-                            <p className="text-sm my-1">Upload Your Passport (only .png, .jpg, .jpeg and .pdf formats)</p>
+                            <p className="text-sm my-1">Upload Your Passport Front (only .png, .jpg, .jpeg and .pdf formats)</p>
                         </label>
-                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userpassport" name="passport" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
+                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userpassportfront" name="passportfront" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
+                    </div>
+                    <div className="flex flex-col justify-around items-start w-full my-2">
+                        <p className="text-sm">Passport Back</p>
+                        <p className="text-sm text-center w-full">{passportBackFileName}</p>
+                        <label htmlFor="userpassportback" className="cursor-pointer text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
+                            <UploadCloud size={40} color="gray" />
+                            <p className="text-sm my-1">Upload Your Passport Back (only .png, .jpg, .jpeg and .pdf formats)</p>
+                        </label>
+                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userpassportback" name="passportback" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <p className="text-sm">Resume</p>

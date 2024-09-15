@@ -23,11 +23,6 @@ interface Props {
 
 export default function PlanCards({ plan } : Props) {
     const router = useRouter();
-    const durationMap = new Map([
-        ['monthly', 'month'],
-        ['yearly', 'year'],
-        ['lifetime', 'lifetime']
-    ]);
 
     const { setChoosenPlan } = GetContext();
     return (
@@ -35,7 +30,7 @@ export default function PlanCards({ plan } : Props) {
         <div className="w-[23%] p-5 rounded-md bg-[#f1f1f1] h-[65svh] flex flex-col justify-around items-start">
             <p className="text-sm font-semibold">{plan.name}</p>
             <div className="font-semibold flex items-baseline justify-start my-4">
-                <h2 className="text-4xl">₹{plan.price}</h2><p className="mx-2">/{durationMap.get(plan.duration)}</p>
+                <h2 className="text-4xl">₹{plan.price}</h2><p className="mx-2">/{plan.duration}</p>
             </div>
             <div className="mb-2">
                 {plan.description}

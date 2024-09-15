@@ -5,9 +5,9 @@ import PlanCards from "../components/getStartedPlans/plancards";
 export default function GetStartedPlans() {
     const plans = [
         {
-            name: 'Basic',
+            name: 'Monthly',
             price: 500,
-            duration: 'monthly',
+            duration: '1 month',
             discount: 10,
             description: 'Basic monthly subscription for individual users',
             field1: 'For personal use',
@@ -17,9 +17,9 @@ export default function GetStartedPlans() {
             field5: '100 site visits'
         },
         {
-            name: 'Premium',
-            price: 1000,
-            duration: 'monthly',
+            name: '6 Months',
+            price: 2000,
+            duration: '6 months',
             discount: 15,
             description: 'Premium monthly subscription for individual users',
             field1: 'For personal use',
@@ -29,9 +29,9 @@ export default function GetStartedPlans() {
             field5: '250 site visits'
         },
         {
-            name: 'Enterprice',
+            name: 'Yearly',
             price: 5000,
-            duration: 'monthly',
+            duration: '1 year',
             discount: 15,
             description: 'monthly subscription for enterprices',
             field1: 'For enterprise uses',
@@ -41,9 +41,9 @@ export default function GetStartedPlans() {
             field5: 'Unlimited site visits'
         },
         {
-            name: 'Pro',
+            name: '5 Years',
             price: 10000,
-            duration: 'yearly',
+            duration: '5 years',
             discount: 10,
             description: 'Pro yearly subscription for individual users',
             field1: 'For personal use',
