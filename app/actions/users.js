@@ -86,7 +86,7 @@ export async function sendUserJoiningMail(){
         const info = await transporter.sendMail(
             {
               from: 'info@wedeazzy.com', // sender address
-              to: 'swaparup36@gmail.com', // list of receivers
+              to: 'ca.broadwayimmigration@gmail.com', // list of receivers
               subject: 'New User Registered', // Subject line
               text: `Hi, Admin. A new user just joined.`
             },
