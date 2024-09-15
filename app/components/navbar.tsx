@@ -646,7 +646,7 @@ export default function Navbar() {
   }, [])
   return (
     <>
-      <div className="w-full flex flex-col justify-center items-center border-b-2 border-gray-200 pb-4">
+      <div className="w-full bg-white flex flex-col justify-center items-center border-b-2 border-gray-200 pb-4">
         <div className="w-[75%] flex justify-end items-center py-2">
           <span className="underline cursor-pointer hover:text-blue-600">
             Français
@@ -695,7 +695,7 @@ export default function Navbar() {
             </div>
           }
           {logoutDropDownOpen &&
-            <div className="absolute right-32 top-40 bg-white py-3 px-4">
+            <div className="absolute right-32 top-40 bg-black dark:bg-white py-3 px-4">
               <button className="flex p-2" onClick={handleLogout}>
                 <LogOut className="mr-2"/>
                 Logout

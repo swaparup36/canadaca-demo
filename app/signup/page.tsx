@@ -46,7 +46,9 @@ export default function UserSignup() {
       
     const [userSignupDetails, setUserSignupDetails] = useState({
         email: '',
-        full_name: '',
+        firstname: '',
+        middlename: '',
+        lastname: '',
         password: '',
         qualification: '',
         utr: '',
@@ -158,8 +160,16 @@ export default function UserSignup() {
                         <input type="file" accept=".png, .jpg, .jpeg" id="userimage" name="image" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
-                        <label htmlFor="userfullname" className="text-sm my-2">Full Name</label>
-                        <input type="text" id="userfullname" placeholder="Enter your full name" name="full_name" value={userSignupDetails.full_name} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" required/>
+                        <label htmlFor="userfirstname" className="text-sm my-2">First Name</label>
+                        <input type="text" id="userfirstname" placeholder="Enter your first name" name="firstname" value={userSignupDetails.firstname} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" required/>
+                    </div>
+                    <div className="flex flex-col justify-around items-start w-full my-2">
+                        <label htmlFor="usermiddlename" className="text-sm my-2">Middle Name</label>
+                        <input type="text" id="usermiddlename" placeholder="Enter your middle name" name="middlename" value={userSignupDetails.middlename} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" />
+                    </div>
+                    <div className="flex flex-col justify-around items-start w-full my-2">
+                        <label htmlFor="userlastname" className="text-sm my-2">Last Name</label>
+                        <input type="text" id="userlastname" placeholder="Enter your last name" name="lastname" value={userSignupDetails.lastname} onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" required/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <label htmlFor="useremail" className="text-sm my-2">Email</label>

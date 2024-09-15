@@ -61,7 +61,7 @@ export default function Footer() {
                         <Link href={'/terms-and-conditions'} className="list-disc hover:text-blue-500 cursor-pointer">Terms and conditions</Link>
                         <Link href={'https://www.canada.ca/en/transparency/privacy.html'} className="list-disc hover:text-blue-500 cursor-pointer">Privacy</Link>
                     </ul>
-                    <div>
+                    <div className="bg-white dark:bg-transparent">
                         <Image src="/images/canada-footer.svg" alt="canada-footer" width={150} height={150} />
                     </div>
                 </div>

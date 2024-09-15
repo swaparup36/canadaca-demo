@@ -30,7 +30,7 @@ export async function userSignup(formdata) {
             }
         }
 
-        const result = await sql`INSERT INTO users (full_name, email, password, qualification, utr, nationality, state, job, passportfront, passportback, image, resume, job_experience_letter, plan, price) VALUES (${formdata.full_name}, ${formdata.email}, ${hashedPassword}, ${formdata.qualification}, ${formdata.utr}, ${formdata.nationality}, ${formdata.state}, ${formdata.job}, ${formdata.passportfront}, ${formdata.passportback}, ${formdata.image}, ${formdata.resume}, ${formdata.job_experience_letter}, ${formdata.plan}, ${formdata.price});`;
+        const result = await sql`INSERT INTO users (firstname, middlename, lastname, email, password, qualification, utr, nationality, state, job, passportfront, passportback, image, resume, job_experience_letter, plan, price) VALUES (${formdata.firstname}, ${formdata.middlename}, ${formdata.lastname}, ${formdata.email}, ${hashedPassword}, ${formdata.qualification}, ${formdata.utr}, ${formdata.nationality}, ${formdata.state}, ${formdata.job}, ${formdata.passportfront}, ${formdata.passportback}, ${formdata.image}, ${formdata.resume}, ${formdata.job_experience_letter}, ${formdata.plan}, ${formdata.price});`;
 
         const user = await sql`SELECT * FROM users WHERE email = ${formdata.email}`;
         const jwtPayload = {

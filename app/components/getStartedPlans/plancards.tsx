@@ -27,7 +27,7 @@ export default function PlanCards({ plan } : Props) {
     const { setChoosenPlan } = GetContext();
     return (
       <>
-        <div className="w-[23%] p-5 rounded-md bg-[#f1f1f1] h-[65svh] flex flex-col justify-around items-start">
+        <div className="w-[23%] p-5 rounded-md bg-gray-800 dark:bg-[#f1f1f1] h-[65svh] flex flex-col justify-around items-start">
             <p className="text-sm font-semibold">{plan.name}</p>
             <div className="font-semibold flex items-baseline justify-start my-4">
                 <h2 className="text-4xl">₹{plan.price}</h2><p className="mx-2">/{plan.duration}</p>
@@ -37,23 +37,23 @@ export default function PlanCards({ plan } : Props) {
             </div>
             <ul className="flex flex-col my-2">
                 <li className="flex justify-start items-center my-1">
-                    <CircleCheck size={20} fill="#d1d1d1" className="mr-2" />
+                    <CircleCheck size={20} className="mr-2 dark:text-[#d1d1d1] text-gray-500" />
                     {plan.field1}
                 </li>
                 <li className="flex justify-start items-center my-1">
-                    <CircleCheck size={20} fill="#d1d1d1" className="mr-2" />
+                    <CircleCheck size={20} className="mr-2 dark:text-[#d1d1d1] text-gray-500" />
                     {plan.field2}
                 </li>
                 <li className="flex justify-start items-center my-1">
-                    <CircleCheck size={20} fill="#d1d1d1" className="mr-2" />
+                    <CircleCheck size={20} className="mr-2 dark:text-[#d1d1d1] text-gray-500" />
                     {plan.field3}
                 </li>
                 <li className="flex justify-start items-center my-1">
-                    <CircleCheck size={20} fill="#d1d1d1" className="mr-2" />
+                    <CircleCheck size={20} className="mr-2 dark:text-[#d1d1d1] text-gray-500" />
                     {plan.field4}
                 </li>
                 <li className="flex justify-start items-center my-1">
-                    <CircleCheck size={20} fill="#d1d1d1" className="mr-2" />
+                    <CircleCheck size={20} className="mr-2 dark:text-[#d1d1d1] text-gray-500" />
                     {plan.field5}
                 </li>
             </ul>
