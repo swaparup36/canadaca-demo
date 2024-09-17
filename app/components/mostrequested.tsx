@@ -9,7 +9,7 @@ export default function MostRequested() {
                 Most requested
             </div>
             <ul className="flex flex-wrap my-2">
-                <Link href={'/getstarted-plans'} className="underline font-semibold text-[#26374a] mb-2 py-2 w-[25%]">Sign in to an account</Link>
+                <Link href={'/signup'} className="underline font-semibold text-[#26374a] mb-2 py-2 w-[25%]">Sign in to an account</Link>
                 <Link href={'https://www.canada.ca/en/services/benefits/ei.html'} className="underline font-semibold text-[#26374a] mb-2 py-2 w-[25%]">Employment Insurance and leave</Link>
                 <Link href={'https://www.canada.ca/en/services/benefits/publicpensions.html'} className="underline font-semibold text-[#26374a] mb-2 py-2 w-[25%]">Public pensions (CPP and OAS)</Link>
                 <Link href={'https://www.canada.ca/en/immigration-refugees-citizenship/services/canadian-passports.html'} className="underline font-semibold text-[#26374a] mb-2 py-2 w-[25%]">Get a passport</Link>
