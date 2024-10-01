@@ -5,13 +5,13 @@ export default function Initiative() {
     return (
       <>
         <div className="w-full flex justify-center items-center">
-          <div className="w-[75%] flex flex-col items-start justify-center py-10">
+          <div className="md:w-[75%] w-[90%] flex flex-col items-start justify-center py-10">
             <div className="flex justify-start items-center">
                 <h2 className="text-2xl font-semibold my-4">Government initiatives</h2>
             </div>
             <div className="flex flex-col justify-center items-center w-full">
-                <div className="flex justify-between items-center w-full">
-                    <div className="initiative-card w-[48%] cursor-pointer bg-gray-800 dark:bg-[#f5f5f5] my-2 flex flex-col justify-start items-start h-[50svh] p-2">
+                <div className="flex md:flex-row flex-col justify-between items-center w-full">
+                    <div className="initiative-card md:w-[48%] w-full cursor-pointer bg-gray-800 dark:bg-[#f5f5f5] my-2 flex flex-col justify-start items-start md:h-[50svh] h-fit p-2">
                         <div className="">
                             <Image src="/images/initiative-1.jpg" alt="initiative-1" width={700} height={700} />
                         </div>
@@ -22,7 +22,7 @@ export default function Initiative() {
                             Government of Canada emergency response, support, and recovery measures
                         </p>
                     </div>
-                    <div className="initiative-card w-[48%] cursor-pointer bg-gray-800 dark:bg-[#f5f5f5] my-2 flex flex-col justify-start items-start h-[50svh] p-2">
+                    <div className="initiative-card md:w-[48%] w-full cursor-pointer bg-gray-800 dark:bg-[#f5f5f5] my-2 flex flex-col justify-start items-start md:h-[50svh] h-fit p-2">
                         <div className="">
                             <Image src="/images/initiative-2.jpg" alt="initiative-1" width={700} height={700} />
                         </div>
@@ -34,8 +34,8 @@ export default function Initiative() {
                         </p>
                     </div>
                 </div>
-                <div className="flex justify-between w-full">
-                    <div className="initiative-card w-[48%] cursor-pointer bg-gray-800 dark:bg-[#f5f5f5] my-2 flex flex-col justify-start items-start h-[50svh] p-2">
+                <div className="flex md:flex-row flex-col justify-between w-full">
+                    <div className="initiative-card md:w-[48%] w-full cursor-pointer bg-gray-800 dark:bg-[#f5f5f5] my-2 flex flex-col justify-start items-start md:h-[50svh] h-fit p-2">
                         <div className="">
                             <Image src="/images/initiative-3.jpg" alt="initiative-1" width={700} height={700} />
                         </div>
@@ -46,7 +46,7 @@ export default function Initiative() {
                             Learn about Canada’s response to the Russian invasion of Ukraine
                         </p>
                     </div>
-                    <div className="initiative-card w-[48%] cursor-pointer bg-gray-800 dark:bg-[#f5f5f5] my-2 flex flex-col justify-start items-start h-[50svh] p-2">
+                    <div className="initiative-card md:w-[48%] w-full cursor-pointer bg-gray-800 dark:bg-[#f5f5f5] my-2 flex flex-col justify-start items-start md:h-[50svh] h-fit p-2">
                         <div className="">
                             <Image src="/images/initiative-4.jpg" alt="initiative-1" width={700} height={700} />
                         </div>

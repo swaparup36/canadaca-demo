@@ -27,7 +27,7 @@ export default function PlanCards({ plan } : Props) {
     const { setChoosenPlan } = GetContext();
     return (
       <>
-        <div className="w-[23%] p-5 rounded-md bg-gray-800 dark:bg-[#f1f1f1] h-[65svh] flex flex-col justify-around items-start">
+        <div className="md:w-[23%] w-[90%] my-4 p-5 rounded-md bg-gray-800 dark:bg-[#f1f1f1] md:h-[65svh] h-min-[50svh] flex flex-col justify-around items-start">
             <p className="text-sm font-semibold">{plan.name}</p>
             <div className="font-semibold flex items-baseline justify-start my-4">
                 <h2 className="text-4xl">₹{plan.price}</h2><p className="mx-2">/{plan.duration}</p>

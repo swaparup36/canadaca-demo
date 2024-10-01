@@ -7,10 +7,10 @@ export default function Footer() {
         <div className="w-full flex justify-center items-center">
             <div className="w-full flex flex-col justify-start items-center py-5">
                 <div className="w-full footer-main flex justify-center items-center text-white">
-                    <div className="w-[75%] flex flex-col justify-center items-start py-4">
+                    <div className="md:w-[75%] w-[90%] flex flex-col justify-center items-start py-4">
                         <h2 className="font-semibold text-xl my-2">Government of Canada</h2>
-                        <div className="flex justify-start items-center w-full">
-                            <div className="flex text-[0.95rem] flex-col justify-between items-start w-[30%] mx-4 my-2">
+                        <div className="flex flex-col md:flex-row justify-start items-center w-full">
+                            <div className="flex text-[0.95rem] flex-col justify-between items-start md:w-[30%] w-full mx-4 my-2">
                                 <span className="my-4 hover:underline cursor-pointer">
                                     <Link href={'https://www.canada.ca/en/contact.html'}>All contacts</Link>
                                 </span>
@@ -24,7 +24,7 @@ export default function Footer() {
                                     <Link href={'https://www.canada.ca/en/services/health.html'} className="my-2 hover:underline cursor-pointer">Health</Link>
                                 </ul>
                             </div>
-                            <div className="flex text-[0.95rem] flex-col justify-between items-start w-[30%] mx-4 my-2">
+                            <div className="flex text-[0.95rem] flex-col justify-between items-start md:w-[30%] w-full mx-4 my-2">
                                 <span className="my-6 hover:underline cursor-pointer">
                                     <Link href={'https://www.canada.ca/en/government/dept.html'}>Departments and agencies</Link>
                                 </span>
@@ -37,7 +37,7 @@ export default function Footer() {
                                     <Link href={'https://www.canada.ca/en/services/transport.html'} className="my-2 hover:underline cursor-pointer">Transport and infrastructure</Link>
                                 </ul>
                             </div>
-                            <div className="flex text-[0.95rem] flex-col justify-between items-start w-[30%] mx-4 my-2">
+                            <div className="flex text-[0.95rem] flex-col justify-between items-start md:w-[30%] w-full mx-4 my-2">
                                 <span className="my-6 hover:underline cursor-pointer">
                                     <Link href={'https://www.canada.ca/en/government/system.html'}>About government</Link>
                                 </span>
@@ -53,13 +53,13 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
-                <div className="w-[75%] flex justify-between items-center py-4">
-                    <ul className="flex text-sm justify-between items-center w-[50%]">
-                        <Link href={'https://www.canada.ca/en/social.html'} className=" hover:text-blue-500 cursor-pointer">Social media</Link>
-                        <Link href={'https://www.canada.ca/en/mobile.html'} className="list-disc hover:text-blue-500 cursor-pointer">Mobile applications</Link>
-                        <Link href={'https://design.canada.ca/about/'} className="list-disc hover:text-blue-500 cursor-pointer">About Canada.ca</Link>
-                        <Link href={'/terms-and-conditions'} className="list-disc hover:text-blue-500 cursor-pointer">Terms and conditions</Link>
-                        <Link href={'https://www.canada.ca/en/transparency/privacy.html'} className="list-disc hover:text-blue-500 cursor-pointer">Privacy</Link>
+                <div className="md:w-[75%] w-[95%] flex justify-between items-center py-4">
+                    <ul className="flex md:flex-row flex-col text-sm justify-between md:items-center items-start md:w-[50%] w-full">
+                        <Link href={'https://www.canada.ca/en/social.html'} className=" hover:text-blue-500 cursor-pointer my-2">Social media</Link>
+                        <Link href={'https://www.canada.ca/en/mobile.html'} className="list-disc hover:text-blue-500 cursor-pointer my-2">Mobile applications</Link>
+                        <Link href={'https://design.canada.ca/about/'} className="list-disc hover:text-blue-500 cursor-pointer my-2">About Canada.ca</Link>
+                        <Link href={'/terms-and-conditions'} className="list-disc hover:text-blue-500 cursor-pointer my-2">Terms and conditions</Link>
+                        <Link href={'https://www.canada.ca/en/transparency/privacy.html'} className="list-disc hover:text-blue-500 cursor-pointer my-2">Privacy</Link>
                     </ul>
                     <div className="bg-white dark:bg-transparent">
                         <Image src="/images/canada-footer.svg" alt="canada-footer" width={150} height={150} />

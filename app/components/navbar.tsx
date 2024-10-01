@@ -652,7 +652,7 @@ export default function Navbar() {
             Français
           </span>
         </div>
-        <div className="w-[75%] flex justify-between items-center py-2">
+        <div className="w-full md:w-[75%] flex flex-col md:flex-row justify-between items-center py-2">
           <div className="flex justify-start items-center">
             <Image
               src="./images/govt-canada.svg"
@@ -661,21 +661,21 @@ export default function Navbar() {
               height={350}
             />
           </div>
-          <div className="flex justify-end items-center w-[50%]">
+          <div className="flex justify-center md:justify-end mt-4 items-center w-[95%] md:w-[50%]">
             <input
               type="text"
               placeholder="Search"
-              className="border-2 border-gray-300 px-2 py-1 w-[60%]"
+              className="border-2 border-gray-300 px-2 py-2 md:py-1 w-[85%] md:w-[60%]"
             />
             <button className="bg-[#26374a] hover:bg-[#444] text-white p-2 font-semibold">
-              <Search size={20} />
+              <Search size={28} />
             </button>
           </div>
         </div>
       </div>
 
       <div className="w-full flex flex-col justify-center items-center border-b-2 border-gray-200">
-        <div className="flex w-[75%] justify-between items-center">
+        <div className="flex w-[90%] md:w-[75%] justify-between items-center">
           <span
             className="flex justify-start items-center cursor-pointer text-lg hover:bg-[#26374a] hover:text-white py-3 px-4"
             onClick={toggleMegaMenu}
@@ -695,7 +695,7 @@ export default function Navbar() {
             </div>
           }
           {logoutDropDownOpen &&
-            <div className="absolute right-32 top-40 bg-black dark:bg-white py-3 px-4">
+            <div className="absolute top-52 z-10 right-6 md:right-32 md:top-40 bg-black dark:bg-white py-3 px-4">
               <button className="flex p-2" onClick={handleLogout}>
                 <LogOut className="mr-2"/>
                 Logout

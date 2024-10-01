@@ -116,8 +116,31 @@ export default function UserSignup() {
         }
     }
 
+    const [isProfilePicEmpty, SetIsProfilePicEmpty] = useState(false);
+    const [isResumeEmpty, SetIsResumeEmpty] = useState(false);
+    const [isPassportFrontEmpty, SetIsPassportFrontEmpty] = useState(false);
+    const [isPassportBackEmpty, SetIsPassportBackEmpty] = useState(false);
+    const [isJobExpLtrEmpty, SetIsJobExpLtrEmpty] = useState(false);
+
     const handleSubmitSignupForm = async(e) => {
         e.preventDefault();
+
+        if(userSignupDetails.image === ""){
+            SetIsProfilePicEmpty(true);
+            return;
+        }else if(userSignupDetails.passportfront === ""){
+            SetIsPassportFrontEmpty(true);
+            return;
+        }else if(userSignupDetails.passportback === ""){
+            SetIsPassportBackEmpty(true);
+            return;
+        }else if(userSignupDetails.resume === ""){
+            SetIsResumeEmpty(true);
+            return;
+        }else if(userSignupDetails.job_experience_letter === ""){
+            SetIsJobExpLtrEmpty(true);
+            return;
+        }    
 
         try {
             const response = await userSignup(userSignupDetails);
@@ -144,20 +167,21 @@ export default function UserSignup() {
             <p className="text-gray-500">Fill the details to join us</p>
         </div>
         <div className="flex justify-center items-center p-5 w-full">
-            <div className="p-10 w-[40%] min-h-[50svh] flex flex-col justify-between items-start" style={{ boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset' }}>
+            <div className="p-5 md:p-10 md:w-[40%] w-full min-h-[50svh] flex flex-col justify-between items-start" style={{ boxShadow: 'rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset' }}>
                 <form className="w-full" onSubmit={handleSubmitSignupForm}>
                     <h3 className="text-2xl my-4 font-medium flex items-center">Fill the details <MoveRight className="ml-2" /></h3>
                     <p className="font-semibold my-4 text-lg">Personal Details</p>
-                    <div className="flex justify-start items-center w-full my-2">
-                        <Image className="rounded-full" src={userSignupDetails.image === '' ? '/images/blank-dp.png' : userSignupDetails.image} alt="user-profile-img" width={110} height={110} />
-                        <div className="flex flex-col justify-around items-start ml-10">
+                    <div className="flex md:flex-row flex-col justify-start items-center w-full my-2">
+                    <Image className="rounded-full" src={userSignupDetails.image === '' ? '/images/blank-dp.png' : userSignupDetails.image} alt="user-profile-img" width={110} height={110} />
+                        <div className="flex flex-col justify-around items-center md:items-start md:ml-10 my-2">
                             <div className="flex items-center justify-around">
                                 <label htmlFor="userimage" className="text-sm my-2 cursor-pointer bg-black text-white px-3 py-2 rounded-md mr-1">Upload</label>
                                 <span className="text-sm my-2 bg-black text-white px-3 py-2 rounded-md ml-1 cursor-pointer" onClick={()=>setUserSignupDetails({...userSignupDetails, image: ''})} >Remove</span>
                             </div>
-                            <p className="text-sm">Upload Profile Picture (only .png, .jpg or .jpeg formats)</p>
+                            <p className="text-sm text-center md:text-left">Upload Profile Picture (only .png, .jpg or .jpeg formats)</p>
+                            {isProfilePicEmpty && <p className="text-sm text-red-500 text-center md:text-left">Please upload profile picture</p>}
                         </div>
-                        <input type="file" accept=".png, .jpg, .jpeg" id="userimage" name="image" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
+                        <input type="file" accept=".png, .jpg, .jpeg" id="userimage" name="image" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden/>
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <label htmlFor="userfirstname" className="text-sm my-2">First Name</label>
@@ -209,36 +233,40 @@ export default function UserSignup() {
                         <p className="text-sm text-center w-full">{passportFrontFileName}</p>
                         <label htmlFor="userpassportfront" className="cursor-pointer text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
                             <UploadCloud size={40} color="gray" />
-                            <p className="text-sm my-1">Upload Your Passport Front (only .png, .jpg, .jpeg and .pdf formats)</p>
+                            <p className="text-sm my-1 px-3">Upload Your Passport Front (only .png, .jpg, .jpeg and .pdf formats)</p>
                         </label>
-                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userpassportfront" name="passportfront" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
+                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userpassportfront" name="passportfront" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden/>
+                        {isPassportFrontEmpty && <p className="text-sm text-red-500 text-center md:text-left my-1">Please upload passport front</p>}
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <p className="text-sm">Passport Back</p>
                         <p className="text-sm text-center w-full">{passportBackFileName}</p>
                         <label htmlFor="userpassportback" className="cursor-pointer text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
                             <UploadCloud size={40} color="gray" />
-                            <p className="text-sm my-1">Upload Your Passport Back (only .png, .jpg, .jpeg and .pdf formats)</p>
+                            <p className="text-sm my-1 px-3">Upload Your Passport Back (only .png, .jpg, .jpeg and .pdf formats)</p>
                         </label>
-                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userpassportback" name="passportback" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
+                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userpassportback" name="passportback" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden/>
+                        {isPassportBackEmpty && <p className="text-sm text-red-500 text-center md:text-left my-1">Please upload passport back</p>}
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <p className="text-sm">Resume</p>
                         <p className="text-sm text-center w-full">{resumeFileName}</p>
                         <label htmlFor="userresume" className="cursor-pointer text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
                             <UploadCloud size={40} color="gray" />
-                            <p className="text-sm my-1">Upload Your Resume (only .png, .jpg, .jpeg and .pdf formats)</p>
+                            <p className="text-sm my-1 px-3">Upload Your Resume (only .png, .jpg, .jpeg and .pdf formats)</p>
                         </label>
-                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userresume" name="resume" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
+                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userresume" name="resume" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden/>
+                        {isResumeEmpty && <p className="text-sm text-red-500 text-center md:text-left my-1">Please upload resume</p>}
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <p className="text-sm">Job experience letter</p>
                         <p className="text-sm text-center w-full">{jobexpletterFileName}</p>
                         <label htmlFor="userjobexpletter" className="cursor-pointer text-sm flex-col my-2 border-dashed rounded-lg border-2 border-gray-400 h-[15svh] w-full flex justify-center items-center">
                             <UploadCloud size={40} color="gray" />
-                            <p className="text-sm my-1">Upload Your Job Experience Letter (only .png, .jpg, .jpeg and .pdf formats)</p>
+                            <p className="text-sm my-1 px-3">Upload Your Job Experience Letter (only .png, .jpg, .jpeg and .pdf formats)</p>
                         </label>
-                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userjobexpletter" name="job_experience_letter" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden required/>
+                        <input type="file" accept=".png, .jpg, .jpeg, .pdf" id="userjobexpletter" name="job_experience_letter" onChange={userSignnupDetailsOnchange} className="w-full border-2 border-gray-200 p-2 rounded-md" hidden/>
+                        {isJobExpLtrEmpty && <p className="text-sm text-red-500 text-center md:text-left my-1">Please upload job experience letter</p>}
                     </div>
                     <div className="flex flex-col justify-around items-start w-full my-2">
                         <button className="text-white w-full py-2 bg-black rounded-md my-2">Proceed</button>

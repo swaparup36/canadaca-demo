@@ -59,8 +59,8 @@ export default function GetStartedPlans() {
             <h1 className="font-bold text-5xl my-2">Purchase a plan</h1>
             <p className="text-gray-500">Purchase any plan to continue with us</p>
         </div>
-      <div className="flex justify-center items-center p-10 w-full h-[70svh] mb-[10rem]">
-        <div className="flex flex-wrap justify-between items-center w-[85%] h-[50svh]">
+      <div className="flex justify-center items-center p-10 w-full md:h-[70svh] h-full md:mb-[10rem]">
+        <div className="flex flex-col md:flex-row md:flex-wrap justify-between items-center md:w-[85%] w-full md:h-[50svh]">
             {
                 plans.map((plan, i)=>{
                     return <PlanCards plan={plan} key={i}/>

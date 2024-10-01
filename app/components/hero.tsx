@@ -2,8 +2,8 @@ export default function Hero() {
   return (
     <>
       <div className="hero w-full flex justify-center items-center">
-        <div className="w-[75%] flex justify-start items-center py-5">
-            <div className="w-[50%] bg-[#26374a] flex flex-col p-4 opacity-90">
+        <div className="md:w-[75%] w-[90%] flex justify-start items-center py-5">
+            <div className="md:w-[50%] bg-[#26374a] flex flex-col p-4 opacity-90">
                 <span className="text-4xl text-white py-3">
                     Canada.ca
                 </span>
